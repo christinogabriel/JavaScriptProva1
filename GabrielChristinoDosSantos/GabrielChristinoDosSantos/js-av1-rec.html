@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de Biblioteca</title>
+</head>
+<body>
+    <h1>Biblioteca - Gestão de Livros</h1>
+</body>
+
+<script type="module" src="js/js-av1.js">
+
+    let livro;
+
+    function exibirMenu() {
+        const opcao = prompt(`Selecione uma opção:\n1 - Cadastrar livro\n2 - Reservar livro\n3 - Devolver livro\n4 - Consultar disponibilidade\n5 - Encerrar`);
+
+        switch (opcao) {
+            case '1':
+                cadastrarLivro();
+                break;
+            case '2':
+                reservarLivro();
+                break;
+            case '3':
+                devolverLivro();
+                break;
+            case '4':
+                consultarDisponibilidade();
+                break;
+            case '5':
+                alert("Encerrando o programa...");
+                break;
+            default:
+                alert("Opção incorreta!");
+                exibirMenu();
+                break;
+        }
+    }
+
+    function cadastrarLivro() {
+        const codLivro = prompt("Digite o código do livro:");
+        const descLivro = prompt("Digite a descrição do livro:");
+        const qtdeDisponivel = parseInt(prompt("Digite a quantidade disponível:"),10);
+
+        if (codLivro && descLivro && !isNaN(qtdeDisponivel)) {
+            livro = new Livro(codLivro, descLivro, qtdeDisponivel);
+            alert("Livro cadastrado com sucesso!");
+        } else {
+            alert("Informações inválidas. Por Favor Tente novamente.");
+        }
+        exibirMenu();
+    }
+
+    function reservarLivro() {
+        if (!livro) {
+            alert("Nenhum livro cadastrado!");
+        } else {
+            const quantidade = parseInt(prompt("Digite a quantidade a ser reservada:"), 10);
+            if (!isNaN(quantidade) && quantidade > 0) {
+                livro.reservarLivro(quantidade);
+            } else {
+                alert("Quantidade inválida.");
+            }
+        }
+        exibirMenu();
+    }
+
+    function devolverLivro() {
+        if (!livro) {
+            alert("Nenhum livro cadastrado!");
+        } else {
+            const quantidade = parseInt(prompt("Digite a quantidade a ser devolvida:"), 10);
+            if (!isNaN(quantidade) && quantidade > 0) {
+                livro.devolverLivro(quantidade);
+            } else {
+                alert("Quantidade inválida.");
+            }
+        }
+        exibirMenu();
+    }
+
+    function consultarDisponibilidade() {
+        if (!livro) {
+            alert("Nenhum livro cadastrado!");
+        } else {
+            alert(livro.consultarDisponibilidade());
+        }
+        exibirMenu();
+    }
+</script>
+
+</html>
